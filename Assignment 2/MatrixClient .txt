@@ -1,0 +1,208 @@
+package Matrix;
+
+import java.util.*;
+
+public class MatrixClient {
+	// declaration of all the constants
+	public static final int MAX = 20;
+	public static final int MIN = 2;
+	public static final int LOW = 1;
+	public static final int UP = 10;
+
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		int choiceAns; // operation to be executed from menu
+		int numCommands = 0; // display counter
+		int size; // for sub-array processing
+		int value; // multiply matrix by this scalar
+
+		System.out.println("Enter the size of the square matrix: ");
+		size = getInt(input);
+		while (size < MIN || size > MAX) {
+			System.out.println("INPUT ERROR!!! Invalid size. Positive and <= 20.");
+			System.out.println("Enter the size of the square matrix: ");
+			size = getInt(input);
+		}
+		do {
+			menu();
+			System.out.print("Please enter your option: ");
+			choiceAns = getInt(input, "WRONG TYPE! Not an integer! REENTER: ");
+			Matrix first = new Matrix(size);
+			Matrix second = new Matrix(size);
+			Matrix result = new Matrix(size);
+
+			while (choiceAns < 0 || choiceAns > 8) {
+				if (choiceAns < 0) {
+					System.out.print("INVALID! Value is negative! and Out of Range! REENTER: ");
+					choiceAns = getInt(input, "WRONG TYPE! Not an integer! REENTER: ");
+				} else if (choiceAns > 8) {
+					System.out.print("INVALID! Out of range! REENTER: ");
+					choiceAns = getInt(input, "WRONG TYPE! Not an integer! REENTER: ");
+				}
+			}
+			switch (choiceAns) {
+			case 0:
+				System.out.println("Testing complete. Exit program.");
+				break;
+			case 1:
+				// call for first matrixes
+				first.init(LOW, UP);
+				System.out.println("First matrix is: ");
+				first.print();
+				// call for second matrix
+				second.init(LOW, UP);
+				System.out.println("Second matrix is: ");
+				second.print();
+				// call for addition of two matrixes
+				result = first.add(second);
+				System.out.println("The resulting matrix is: ");
+				result.print();
+				numCommands++;
+				System.out.println("Command number " + (numCommands) + " completed.");
+				break;
+			case 2:
+				// call for first matrix
+				first.init(LOW, UP);
+				System.out.println("First matrix is: ");
+				first.print();
+				// call for second matrix
+				second.init(LOW, UP);
+				System.out.println("Second matrix is: ");
+				second.print();
+				// call for subtraction of two matrixes
+				result = first.subtract(second);
+				System.out.println("The resulting matrix is: ");
+				result.print();
+				numCommands++;
+				System.out.println("Command number " + (numCommands) + " completed.");
+				break;
+			case 3:
+				// call for first matrix
+				first.init(LOW, UP);
+				System.out.println("First matrix is: ");
+				first.print();
+				// call for second matrix
+				second.init(LOW, UP);
+				System.out.println("Second matrix is: ");
+				second.print();
+				// call for multiplication of two matrixes
+				result = first.multiply(second);
+				System.out.println("The resulting matrix is: ");
+				result.print();
+				numCommands++;
+				System.out.println("Command number " + (numCommands) + " completed.");
+				break;
+			case 4:
+				// Asking user for constant
+				System.out.println("Enter the multiplication constant: ");
+				value = getInt(input);
+				// call for first matrix
+				first.init(LOW, UP);
+				System.out.println("The original matrix is: ");
+				first.print();
+				// call for multiplying with constant
+				result = first.multiplyConst(value);
+				System.out.println("The original matrix multiplied by " + value + " is: ");
+				result.print();
+				numCommands++;
+				System.out.println("Command number " + (numCommands) + " completed.");
+				break;
+			case 5:
+				// call for first matrix
+				first.init(LOW, UP);
+				System.out.println("The original matrix is: ");
+				first.print();
+				// call to transpose the matrix
+				result = first.transpose();
+				System.out.println("The resulting matrix is: ");
+				result.print();
+				numCommands++;
+				System.out.println("Command number " + (numCommands) + " completed.");
+				break;
+			case 6:
+				// call for first matrix
+				first.init(LOW, UP);
+				System.out.println("The original matrix is: ");
+				first.print();
+				// Call for trace value
+				System.out.println("The trace for this matrix is: " + first.trace());
+				numCommands++;
+				System.out.println("Command number " + (numCommands) + " completed.");
+				break;
+			case 7:
+				// call for first matrix
+				first.init(LOW, UP);
+				System.out.println("First matrix is: ");
+				first.print();
+				// Call to copy first matrix
+				result.copy(first);
+				System.out.println("The copy of this matrix is: ");
+				result.print();
+				// testing for equality
+				System.out.println("Testing for equality. Should be equal!!");
+				if (first.equals(result))
+					System.out.print("The matrices are equal!!");
+				else
+					System.out.print("The matrices are NOT equal!!");
+				numCommands++;
+				System.out.println("Command number " + (numCommands) + " completed.");
+				break;
+			case 8:
+				// call for first matrix
+				first.init(LOW, UP);
+				System.out.println("First matrix is: ");
+				first.print();
+				// call for second matrix
+				second.init(LOW, UP);
+				System.out.println("Second matrix is: ");
+				second.print();
+				// testing equality
+				if (first.equals(second))
+					System.out.print("The matrices are equal!!");
+				else
+					System.out.print("The matrices are NOT equal!!");
+				numCommands++;
+				System.out.println("Command number " + (numCommands) + " completed.");
+				break;
+			}
+		} while (choiceAns != 0);
+
+	}
+
+	// input validation for checking if it is integer or not
+	public static int getInt(Scanner input) {
+		while (!input.hasNextInt()) {
+			System.out.println("Not an integer! Try again:");
+			input.next();
+		}
+		int x = input.nextInt();
+		return x;
+	}
+
+	// input validation
+	public static int getInt(Scanner input, String prompt) {
+
+		while (!input.hasNextInt()) {
+			System.out.println(prompt);
+			input.next();
+		}
+		int number = input.nextInt();
+
+		return number;
+	}
+
+	// call to menu
+	public static void menu() {
+		System.out.println("Your options are: ");
+		System.out.println("-----------------");
+		System.out.println("\t1) Add 2 matrices");
+		System.out.println("\t2) Subtract 2 matrices");
+		System.out.println("\t3) Multiply 2 matrices");
+		System.out.println("\t4) Multiply matrix by a constant");
+		System.out.println("\t5) Transpose matrix");
+		System.out.println("\t6) Matrix trace");
+		System.out.println("\t7) Make a copy");
+		System.out.println("\t8) Test for equality");
+		System.out.println("\t0) EXIT");
+	}
+}

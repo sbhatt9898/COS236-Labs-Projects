@@ -1,0 +1,229 @@
+import java.util.*;
+
+public class FinalDraftAssignment1_2 {
+  
+  public static void main(String[] args) {
+    Scanner numberInput = new Scanner(System.in);
+    final int MIN = 1;
+    final int MAX = 100;
+    int choiceAns;   
+    do {
+      menu();      
+      System.out.print("Please enter your option: ");      
+      choiceAns = getInt(numberInput, "WRONG TYPE! Not an integer! REENTER: ");      
+      int k;
+      int[] slArray;
+      int numArray;
+      int[] sArray;
+      
+      while(choiceAns < 0 || choiceAns > 6) {
+        System.out.println("INVALID! Out of range! REENTER: ");       
+        choiceAns = getInt(numberInput, "WRONG TYPE! Not an integer! REENTER: ");
+      }      
+      switch(choiceAns) {
+        case 0:
+          System.out.println("Testing complete. Exit program.");
+          break;
+        case 1:
+          System.out.print("How many elements in the list: ");
+          numArray = getInt(numberInput, "Not an integer! Try again!");           
+          slArray = createArray(numArray,MAX,MIN); 
+           //Printing Orignal Array 
+          System.out.print("The original list is: ");          
+          print(slArray);   
+          // Call for shifting to left 1 position
+          shiftLeft(slArray);          
+          System.out.print("The list after left rotation is: ");          
+          print(slArray);          
+          break;
+        case 2:
+          System.out.print("How many elements in the list: ");
+          numArray = getInt(numberInput, "Not an integer! Try again!");           
+          slArray = createArray(numArray,MAX,MIN);   
+          //Printing Orignal Array 
+          System.out.println("The original list is: ");          
+          print(slArray);    
+          // Asking for k
+          System.out.print("Input k (step for shift left): ");          
+          k = getInt(numberInput, "Not an integer! Try again!");          
+           // Call for shifting to left k position 
+          shiftLeft(slArray,k);         
+          System.out.println("The list after left rotation with " + k + " positions is: ");          
+          print(slArray);          
+          break;
+        case 3: 
+          System.out.print("How many elements in the list: ");
+          numArray = getInt(numberInput, "Not an integer! Try again!");           
+          slArray = createArray(numArray,MAX,MIN); 
+          //Printing Orignal Array 
+          System.out.println("The original list is: ");          
+          print(slArray); 
+          // Asking for k
+          System.out.print("Input k (step for shift left): ");          
+          k = getInt(numberInput, "Not an integer! Try again!");                    
+          // Call for shifting to left k position - copied 
+          sArray = shiftLeftK(slArray, numArray ,k);             
+          System.out.println("The list after left rotation with " + k + " positions is: ");          
+          print(sArray);
+          break;
+        case 4:
+          System.out.print("How many elements in the list: ");
+          numArray = getInt(numberInput, "Not an integer! Try again!");           
+          slArray = createArray(numArray,MAX,MIN);
+          //Printing Orignal Array 
+          System.out.println("The original list is: ");          
+          print(slArray);          
+          // Call for shifting to right 1 position 
+          shiftRight(slArray);          
+          System.out.println("The list after right rotation is: ");          
+          print(slArray);
+          break;
+        case 5:    
+          System.out.print("How many elements in the list: ");
+          numArray = getInt(numberInput, "Not an integer! Try again!");           
+          slArray = createArray(numArray,MAX,MIN);
+          //Printing Orignal Array 
+          System.out.println("The original list is: ");         
+          print(slArray); 
+          // Asking for k
+          System.out.print("Input k (step for shift right): ");         
+          k = getInt(numberInput, "Not an integer! Try again!");  
+          // Call for shifting to right k position 
+          shiftRight(slArray,k);          
+          System.out.println("The list after right rotation with " + k + " positions is: ");          
+          print(slArray);
+          break;
+        case 6:    
+          System.out.print("How many elements in the list: ");
+          numArray = getInt(numberInput, "Not an integer! Try again!");           
+          slArray = createArray(numArray,MAX,MIN);
+          //Printing Orignal Array 
+          System.out.println("The original list is: ");
+          print(slArray);
+          // Asking for k
+          System.out.print("Input k (step for shift right): ");
+          k = getInt(numberInput, "Not an integer! Try again!");   
+          // Call for shifting to right k position - copied 
+          sArray = shiftRightK(slArray, numArray ,k); 
+          System.out.println("The list after right rotation with " + k + " positions is: ");          
+          print(sArray);
+          break;
+      }
+    }
+    while(choiceAns != 0);
+  }
+  //Method to print 
+  public static void print(int[] theArray) {
+    for(int i = 0; i < theArray.length; i++) {
+      System.out.printf("%5d", theArray[i]);
+    }
+    System.out.println();
+  }
+  //Input Validation 
+  public static int getInt(Scanner UserInput, String prompt){
+    
+    while(!UserInput.hasNextInt()){
+      System.out.println(prompt);
+      UserInput.next();
+    }    
+    int number = UserInput.nextInt();    
+    return number;
+  }
+  //Main Method Menu 
+  public static void menu() {
+    System.out.println("Your options are: ");
+    for(int i = 0; i <= 16; i++) {
+      System.out.print("-");
+    }
+    System.out.println();
+    System.out.printf("%19s%n", "1) Shift left");
+    System.out.printf("%39s%n", "2) Shift left (k steps)/ in place");
+    System.out.printf("%42s%n", "3) Shift left (k steps)/second array");
+    System.out.printf("%20s%n", "4) Shift right");
+    System.out.printf("%39s%n", "5) Shift right (k steps)/in place");
+    System.out.printf("%43s%n", "6) Shift right (k steps)/second array");
+    System.out.printf("%13s%n", "0) EXIT");
+  }
+  //Method to get Random Array 
+  public static int[] createArray(int size,int up,int low){
+    int [] theArray = new int[size];
+    
+    for(int i = 0; i < size; i++) {
+      Random rand = new Random();
+      theArray[i] = rand.nextInt(up - low + 1) + low;
+    }    
+    return theArray;
+  }
+  // Method to shift left 1 position 
+  public static void shiftLeft(int[] theArray) {
+    int value = theArray[0];    
+    int i;    
+    for(i = 0; i < theArray.length-1; i++) {
+      theArray[i] = theArray[i +1];
+    }    
+    theArray[i] = value;
+  }  
+  // Method for shifting to left k position 
+  public static void shiftLeft(int[] theArray, int k) {
+    for(int times = 1; times <= k; times++) {
+      int i;
+      int value = theArray[0];
+      for(i = 0; i < theArray.length-1; i++) {
+        theArray[i] = theArray[i+1];
+      }
+      theArray[i] = value;
+    }
+  }
+  // Method for shifting to left k position - copied 
+  public static int[] shiftLeftK(int [] theArray, int s ,int k) {   
+    int[] sArray = new int[s];    
+    for(int i = 0; i < s; i++) {
+      sArray[i] = theArray[i];
+    }    
+    for(int times = 1; times <= k; times++) {
+      int i;
+      int value = sArray[0];
+      for(i = 0; i < s-1; i++) {
+        sArray[i] = sArray[i+1];
+      }
+      sArray[i] = value;
+    }    
+    return sArray;
+  }
+  // Method for shifting to right 1 position
+  public static void shiftRight(int [] a) {
+    int j;
+    int lastelement= a[a.length-1];    
+    for(j=a.length-1;j>0;j--){
+      a[j]= a[j-1];
+    }
+    a[0]=lastelement;
+  } 
+  // Method for shifting to right k position
+  public static void shiftRight(int [] a, int k) {
+    for(int times=1;times<=k;times++){
+      int j;
+      int lastelement= a[a.length-1];      
+      for(j=a.length-1;j>0;j--){
+        a[j]= a[j-1];
+      }
+      a[0]=lastelement;
+    }
+  }  
+  // Method for shifting to right k position - copied
+  public static int[]shiftRightK(int[]a, int size, int k) {    
+    int[]shiftRightK2= new int[size];    
+    for(int i =0; i<size;i++){
+      shiftRightK2[i] = a[i];
+    }   
+    for(int times=1;times<=k;times++){
+      int j;
+      int lastelement= shiftRightK2[size-1];     
+      for(j=size-1;j>0;j--){
+        shiftRightK2[j]= shiftRightK2[j-1];
+      }
+      shiftRightK2[0]=lastelement;
+    }
+    return  shiftRightK2;  
+  }  
+}

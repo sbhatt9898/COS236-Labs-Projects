@@ -1,0 +1,257 @@
+import java.util.*;
+public class FinalDraftAssignment1_1
+{
+  public static void main(String[]args)
+  {
+    Scanner numberInput = new Scanner (System.in);
+    final int MIN = 1;
+    final int MAX = 10;    
+    int choiceAns;
+    do {
+      menu();      
+      System.out.print("Please enter your option: ");      
+      choiceAns = getInt(numberInput, "WRONG TYPE! Not an integer! REENTER: ");      
+      int k;
+      int[] slArray;
+      int numArray;
+      int[] sArray;
+      int size;
+      
+      while(choiceAns < 0 || choiceAns > 6) {
+        System.out.println("INVALID! Out of range! REENTER: ");       
+        choiceAns = getInt(numberInput, "WRONG TYPE! Not an integer! REENTER: ");
+      }      
+      switch(choiceAns) {
+        case 0:
+          System.out.println("Testing complete. Exit program.");
+          break;
+        case 1:
+          System.out.println("Enter the size of square matrices: ");         
+          //int size = input.nextInt();
+          size =getInt(numberInput, "Not an integer! Try again!");   
+          // call randArray a1
+          int[][] a1= randArray(size, MIN, MAX);
+          System.out.println("First matrix is: ");
+          printArray(a1,size);          
+          // call randArray a2
+          int[][]a2= randArray2(size, MIN, MAX);
+          System.out.println("Second matrix is: ");
+          printArray(a2,size);          
+          // call adding arrays
+          int[][]addResult= addArray(a1,a2,size);
+          System.out.println("The resulting matrix is:  ");
+          printArray(addResult,size);
+          
+          System.out.println("                   Command number 1 completed.              ");
+          
+          break;
+          
+        case 2:
+          System.out.println("Enter the size of square matrices: ");
+          size =getInt(numberInput, "Not an integer! Try again!");  
+          // call randArray a1
+          a1= randArray(size, MIN, MAX);
+          System.out.println("First matrix is: ");
+          printArray(a1,size);          
+          // call randArray a2
+          a2= randArray2(size, MIN, MAX);
+          System.out.println("Second matrix is: ");
+          printArray(a2,size);          
+          // call substracting arrays
+          int[][]subtractResult= substractArray(a1,a2,size);
+          System.out.println("The resulting matrix is:  ");
+          printArray(subtractResult,size);          
+          System.out.println("                   Command number 2 completed.              ");
+          //option = menu();
+          break;
+          
+        case 3:
+          System.out.println("Enter the size of square matrices: ");
+          size =getInt(numberInput, "Not an integer! Try again!");           
+          // call randArray a1
+          a1= randArray(size, MIN, MAX);
+          System.out.println("First matrix is: ");
+          printArray(a1,size);          
+          // call randArray a2
+          a2= randArray2(size, MIN, MAX);
+          System.out.println("Second matrix is: ");
+          printArray(a2,size);          
+          // call multiplying arrays
+          int[][]multiResult= multiArray(a1,a2,size);
+          System.out.println("The resulting matrix is:  ");
+          printArray(multiResult,size);
+          
+          System.out.println("                   Command number 3 completed.              ");
+          
+          break;
+          
+        case 4:
+          System.out.println("Enter the size of square matrices: ");
+          size =getInt(numberInput, "Not an integer! Try again!");            
+          System.out.println("Enter the multiplication constant: ");
+          int constant = numberInput.nextInt();      
+          // call randArray a1
+          a1= randArray(size, MIN, MAX);
+          System.out.println("The original matrix is: ");
+          printArray(a1,size);         
+          // call  multi arrays by constant
+          int[][]constmultiResult =constArray(a1,size,constant);
+          System.out.println("The original matrix multiplied by " + constant + " is:");
+          printArray(constmultiResult,size);
+          
+          System.out.println("                   Command number 4 completed.              ");
+          
+          break;
+          
+        case 5:
+          System.out.println("Enter the size of square matrices: ");
+          size =getInt(numberInput, "Not an integer! Try again!");           
+          // call randArray a1
+          a1= randArray(size, MIN, MAX);
+          System.out.println("The original matrix is: ");
+          printArray(a1,size);  
+          // call transponing arrays
+          int[][]transResult= transArray(a1,size);
+          System.out.println("The resulting matrix is:  ");
+          printArray(transResult,size);
+          
+          System.out.println("                   Command number 5 completed.              ");
+          
+          break;         
+        case 6:
+          System.out.println("Enter the size of square matrices: ");
+          size =getInt(numberInput, "Not an integer! Try again!");           
+          // call randArray a1
+          a1= randArray(size, MIN, MAX);
+          System.out.println("The original matrix is: ");
+          printArray(a1,size);  
+          // call tracing arrays
+          traceArray(a1,size);          
+          System.out.println("                   Command number 6 completed.              ");
+          
+          break;
+      }
+    }
+    while(choiceAns != 0);
+  }
+  public static int getInt(Scanner UserInput, String prompt){
+    
+    while(!UserInput.hasNextInt()){
+      System.out.println(prompt);
+      UserInput.next();
+    }
+    
+    int number = UserInput.nextInt();
+    
+    return number;
+  } 
+  public static void menu() {
+    
+    System.out.println("Your options are: ");
+    System.out.println("-----------------");
+    System.out.println("        1) Add 2 matrices");
+    System.out.println("        2) Subtract 2 matrices");
+    System.out.println("        3) Multiply 2 matrices");
+    System.out.println("        4) Multiply matrix by a constant");
+    System.out.println("        5) Transpose matrix");
+    System.out.println("        6) Matrix trace");
+    System.out.println("        0) EXIT");
+  }
+  // Method printing
+  public static void printArray(int[][]a1,int size)
+  {
+    for (int r = 0; r < size; r++){
+      for (int c = 0; c < size; c++)
+        System.out.printf("%5d", a1[r][c]);
+      System.out.println();
+    }    
+  }
+  // Method randArray a1
+  public static int[][] randArray(int size, int low, int up)
+  {
+    int[][]a1 = new int[size][size];
+    Random rand = new Random();
+    for (int r = 0; r < size; r++)
+      for (int c = 0; c < size; c++)
+      a1[r][c] = rand.nextInt(up - low + 1) + low;
+    return a1;
+  }
+  // Method randArray a2
+  public static int[][] randArray2(int size, int low, int up)
+  {
+    int[][] a2 = new int[size][size];
+    Random rand = new Random();
+    for (int r = 0; r < size; r++)
+      for (int c = 0; c < size; c++)
+      a2[r][c] = rand.nextInt(up - low + 1) + low;
+    return a2;
+  }
+  // Method adding arrays
+  public static int[][] addArray(int[][]a1,int[][]a2,int size)
+  {
+    int[][] addResult = new int[size][size];
+    for (int r = 0; r < size; r++)
+      for (int c = 0; c < size; c++)
+      addResult[r][c] = a1[r][c] + a2[r][c];
+    return addResult;
+  }
+  // Method substracting arrays
+  public static int[][] substractArray(int[][]a1,int[][]a2,int size)
+  {
+    int[][] subtractResult = new int[size][size];
+    for (int r = 0; r < size; r++)
+      for (int c = 0; c < size; c++)
+      subtractResult[r][c] = a1[r][c] - a2[r][c];
+    return subtractResult;
+  }
+  // Method multiplying arrays
+  public static int[][] multiArray(int[][]a1,int[][]a2,int size)
+  {   
+    int[][] multiResult = new int[size][size];
+    for (int r = 0; r < size; r++){
+      for (int c = 0; c < size; c++){
+        multiResult[r][c] =0;
+        for (int k = 0; k < size; k++){
+          multiResult[r][c] += a1[r][k] * a2[k][c];
+        }      
+      }
+    }
+    return multiResult;
+  }
+  // Method multi arrays by constant
+  public static int[][] constArray(int[][]a1,int size,int constant)
+  {
+    int[][] constmultiResult = new int[size][size];
+    for (int r = 0; r < size; r++){
+      for (int c = 0; c < size; c++)
+        constmultiResult[r][c] = a1[r][c] * constant;
+    }
+    return constmultiResult;
+  }
+  // Method Transposing arrays
+  public static int[][] transArray(int[][]a1, int size)
+  {
+    int[][] transResult = new int[size][size];
+    for (int r = 0; r < size; r++)
+      for (int c = 0; c < size; c++)
+      transResult[r][c] = a1[c][r] ;
+    return transResult;
+  }
+  // Method tracing arrays
+  public static void traceArray(int[][]a1, int size)
+  {
+    int tra = 0;
+    for (int r = 0; r < size; r++)
+    {
+      for (int c = 0; c < size; c++)
+      {
+        if(r==c)  
+        {
+          tra+=a1[c][r] ;
+        }
+      }
+    }
+    System.out.println(" The trace for this matrix is: " + tra);
+  }
+}
+

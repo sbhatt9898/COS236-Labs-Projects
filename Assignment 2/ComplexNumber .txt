@@ -1,0 +1,110 @@
+package Completx;
+
+import java.util.Scanner;
+
+public class ComplexNumber extends ComplexClient {
+	private double rNum;
+	private double iNum;
+
+	// Default Constructor
+	public ComplexNumber() {
+		rNum = 0.0;
+		iNum = 0.0;
+	}
+
+	// Alternate Constructor
+	public ComplexNumber(double r, double i) {
+		rNum = r;
+		iNum = i;
+	}
+
+	// Read Method
+	public void read() {
+		Scanner dInput = new Scanner(System.in);
+		System.out.print("Enter complex number (real imaginary): ");
+		rNum = getDouble(dInput, "WRONG TYPE! Not a double! REENTER: ");
+		iNum = getDouble(dInput, "WRONG TYPE! Not a double! REENTER: ");
+	}
+
+	// Print Method
+	public void print() {
+		System.out.printf("(%.2f, %.2f)", rNum, iNum);
+	}
+
+	// Getters
+	public double getReal() {
+		return rNum;
+	}
+
+	public double getImaginary() {
+		return iNum;
+	}
+
+	// Setters
+	public void setReal(double r) {
+		rNum = r;
+	}
+
+	public void setImaginary(double i) {
+		iNum = i;
+	}
+
+	// Equals Method
+	public boolean equals(ComplexNumber C) {
+		return (rNum == C.rNum && iNum == C.iNum);
+	}
+
+	// Copy Method
+	public void copy(ComplexNumber C) {
+		rNum = C.rNum;
+		iNum = C.iNum;
+	}
+
+	// Getter for copy
+	public ComplexNumber getCopy() {
+		return new ComplexNumber(rNum, iNum);
+	}
+
+	// toString Method
+	public String toString() {
+		return String.format("(%.2f, %.2f)", rNum, iNum);
+	}
+
+	// Addition Method
+	public ComplexNumber Addition(ComplexNumber C) {
+		double r = rNum + C.getReal();
+		double i = iNum + C.getImaginary();
+		return new ComplexNumber(r, i);
+	}
+
+	// Subtraction Method
+	public ComplexNumber Subtract(ComplexNumber C) {
+		double r = rNum - C.getReal();
+		double i = iNum - C.getImaginary();
+
+		return new ComplexNumber(r, i);
+	}
+
+	// Multiplication Method
+	public ComplexNumber Multiplication(ComplexNumber C) {
+		double r = (rNum * C.getReal() - iNum * C.getImaginary());
+		double i = (rNum * C.getImaginary() + iNum * C.getReal());
+
+		return new ComplexNumber(r, i);
+	}
+
+	// Division Method
+	public ComplexNumber Division(ComplexNumber C) {
+		double d = (C.getReal() * C.getReal()) + (C.getImaginary() * C.getImaginary());
+		double r = (rNum * (C.getReal())) + (iNum * (C.getImaginary()));
+		double i = (iNum * (C.getReal())) - (rNum * (C.getImaginary()));
+
+		return new ComplexNumber(r / d, i / d);
+	}
+
+	// Absolute Method
+	public double cAbs() {
+		double sqrt = Math.sqrt((rNum * rNum) + (iNum * iNum));
+		return sqrt;
+	}
+}

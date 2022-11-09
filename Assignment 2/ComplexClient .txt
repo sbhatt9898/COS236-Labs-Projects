@@ -1,0 +1,162 @@
+package Completx;
+
+import java.util.*;
+
+public class ComplexClient {
+	public static void main(String[] args) {
+		// Declaration of objects
+		ComplexNumber c1 = new ComplexNumber();
+		ComplexNumber c2 = new ComplexNumber();
+		ComplexNumber c3 = new ComplexNumber();
+
+		int count = 0;
+
+		Scanner numInput = new Scanner(System.in);
+		int choiceAns;
+
+		do {
+			menu();
+			choiceAns = getInt(numInput, "WRONG TYPE! Not an integer! REENTER: ");
+			// Input Validations
+			while (choiceAns < 0 || choiceAns > 6) {
+				if (choiceAns < 0) {
+					System.out.print("INVALID! Value is negative! and Out of Range! REENTER: ");
+					choiceAns = getInt(numInput, "WRONG TYPE! Not an integer! REENTER: ");
+				} else if (choiceAns > 6) {
+					System.out.print("INVALID! Out of range! REENTER: ");
+					choiceAns = getInt(numInput, "WRONG TYPE! Not an integer! REENTER: ");
+				}
+			}
+			switch (choiceAns) {
+			case 0:
+				System.out.print("Testing completed.");
+				break;
+			case 1:
+				c1.read();
+				c2.read();
+				// Addition Method Call
+				c3 = c1.Addition(c2);
+				System.out.println("First complex number (real imaginary): " + c1.toString());
+				System.out.println("Second complex number is: " + c2.toString());
+				System.out.print("Result: " + c1.toString() + " + " + c2.toString() + " =  ");
+				c3.print();
+				System.out.println(" ");
+				// Command Number Increment
+				count++;
+				System.out.println("\tCommand number " + count + " completed.");
+				break;
+			case 2:
+				c1.read();
+				c2.read();
+				// Subtraction Method Call
+				c3 = c1.Subtract(c2);
+				System.out.println("First complex number (real imaginary): " + c1.toString());
+				System.out.println("Second complex number is: " + c2.toString());
+				System.out.print("Result: " + c1.toString() + " - " + c2.toString() + " =  ");
+				c3.print();
+				System.out.println(" ");
+				// Command Number Increment
+				count++;
+				System.out.println("\tCommand number " + count + " completed.");
+				break;
+			case 3:
+				c1.read();
+				c2.read();
+				// Multiplication Method Call
+				c3 = c1.Multiplication(c2);
+				System.out.println("First complex number (real imaginary): " + c1.toString());
+				System.out.println("Second complex number is: " + c2.toString());
+				System.out.print("Result: " + c1.toString() + " * " + c2.toString() + " =  ");
+				c3.print();
+				System.out.println(" ");
+				// Command Number Increment
+				count++;
+				System.out.println("\tCommand number " + count + " completed.");
+				break;
+			case 4:
+				c1.read();
+				c2.read();
+				// Division Method Call
+				c3 = c1.Division(c2);
+				System.out.println("First complex number (real imaginary): " + c1.toString());
+				System.out.println("Second complex number is: " + c2.toString());
+				System.out.print("Result: " + c1.toString() + " / " + c2.toString() + " =  ");
+				c3.print();
+				System.out.println(" ");
+				// Command Number Increment
+				count++;
+				System.out.println("\tCommand number " + count + " completed.");
+				break;
+			case 5:
+				c1.read();
+				System.out.print("The complex number (real imaginary): ");
+				c1.print();
+				System.out.println(" ");
+				// Absolute Value
+				System.out.print("Result: " + " |" + c1 + "| " + " = ");
+				System.out.printf("%.2f", c1.cAbs());
+				System.out.println(" ");
+				// Command Number Increment
+				count++;
+				System.out.println("\tCommand number " + count + " completed.");
+				break;
+			case 6:
+				c1.read();
+				c2.read();
+				System.out.println("First complex number (real imaginary): " + c1.toString());
+				System.out.println("Second complex number is: " + c2.toString());
+				// Checking for Equality Call
+				if (c1.equals(c2)) {
+					System.out.println("The complex numbers are equal");
+				} else {
+					System.out.println("The complex numbers are not equal");
+				}
+				// Command Number Increment
+				count++;
+				System.out.println("\tCommand number " + count + " completed.");
+				break;
+			}
+		}
+
+		while (choiceAns != 0);
+	}
+
+	// Input Validation Method - Integer Checking
+	public static int getInt(Scanner UserInput, String prompt) {
+
+		while (!UserInput.hasNextInt()) {
+			System.out.println(prompt);
+			UserInput.next();
+		}
+
+		int number = UserInput.nextInt();
+
+		return number;
+	}
+
+	// Input Validation Method - Double Checking
+	public static double getDouble(Scanner UserInput, String prompt) {
+		while (!UserInput.hasNextDouble()) {
+			System.out.println(prompt);
+			UserInput.next();
+		}
+
+		double n = UserInput.nextDouble();
+
+		return n;
+	}
+
+	// Menu Method
+	public static void menu() {
+		System.out.println("Your options for Complex arithmetic are: ");
+		System.out.println("-----------------------------------------");
+		System.out.println("\t1) Add 2 complex numbers");
+		System.out.println("\t2) Subtract 2 complex number");
+		System.out.println("\t3) Multiply 2 complex numbers");
+		System.out.println("\t4) Divide 2 complex numbers");
+		System.out.println("\t5) Absolute value of a complex number");
+		System.out.println("\t6) Compare 2 complex numbers");
+		System.out.println("\t0) EXIT");
+		System.out.print("Please enter your option: ");
+	}
+}

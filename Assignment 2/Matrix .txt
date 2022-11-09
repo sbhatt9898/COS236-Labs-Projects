@@ -1,0 +1,145 @@
+package Matrix;
+
+import java.util.*;
+
+public class Matrix {
+	public final int MAX = 20;
+	private int size;
+	private int[][] a1 = new int[MAX][MAX];
+
+	// Default Constructor
+	public Matrix() {
+		size = MAX;
+	}
+
+	// Alternate Constructor
+	public Matrix(int s) {
+		size = s;
+	}
+
+	// getter for size
+	public int getSize() {
+		return size;
+	}
+
+	// getter for element
+	public int getElement(int r, int c) {
+		return a1[r][c];
+	}
+
+	// Setter
+	public void setElement(int r, int c, int value) {
+		r = (r <= 0) ? r : 1;
+		c = (c <= 0) ? c : 1;
+		value = (value <= 0) ? value : 1;
+	}
+
+	// random Generator
+	public void init(int low, int up) {
+		Random rand = new Random();
+		for (int r = 0; r < this.size; r++)
+			for (int c = 0; c < this.size; c++)
+				a1[r][c] = rand.nextInt(up - low + 1) + low;
+	}
+
+	// Print Method
+	public void print() {
+		for (int r = 0; r < size; r++) {
+			for (int c = 0; c < size; c++)
+				System.out.printf("%5d", a1[r][c]);
+			System.out.println();
+		}
+	}
+
+	// Addition Method
+	public Matrix add(Matrix a) {
+		Matrix addresult = new Matrix(size);
+		for (int r = 0; r < size; r++)
+			for (int c = 0; c < size; c++)
+				addresult.a1[r][c] = this.a1[r][c] + a.a1[r][c];
+		return addresult;
+	}
+
+	// Subtraction Method
+	public Matrix subtract(Matrix a) {
+		Matrix subtractResult = new Matrix(size);
+		for (int r = 0; r < size; r++)
+			for (int c = 0; c < size; c++)
+				subtractResult.a1[r][c] = this.a1[r][c] - a.a1[r][c];
+		return subtractResult;
+	}
+
+	// Multiplication Method
+	public Matrix multiply(Matrix a) {
+		Matrix multiResult = new Matrix(size);
+		for (int r = 0; r < size; r++) {
+			for (int c = 0; c < size; c++) {
+				// multiResult[r][c] =0;
+				for (int k = 0; k < this.size; k++) {
+					multiResult.a1[r][c] += this.a1[r][k] * a.a1[k][c];
+				}
+			}
+		}
+		return multiResult;
+	}
+
+	// Multiply by constant
+	public Matrix multiplyConst(int whatConst) {
+		Matrix constmultiResult = new Matrix(size);
+		for (int r = 0; r < size; r++) {
+			for (int c = 0; c < size; c++)
+				constmultiResult.a1[r][c] = this.a1[r][c] * whatConst;
+		}
+		return constmultiResult;
+	}
+
+	// Transpose Method
+	public Matrix transpose() {
+		Matrix transResult = new Matrix(size);
+		for (int r = 0; r < size; r++)
+			for (int c = 0; c < size; c++)
+				transResult.a1[r][c] = this.a1[c][r];
+		return transResult;
+	}
+
+	// Trace Method
+	public int trace() {
+		int tr = 0;
+		for (int r = 0; r < size; r++) {
+			tr += this.a1[r][r];
+		}
+		return tr;
+	}
+
+	// Equals Method
+	public boolean equals(Object obj) {
+		boolean ans = true;
+		if (obj instanceof Matrix) {
+			Matrix otherMatrix = (Matrix) obj;
+			for (int r = 0; r < size; r++)
+				for (int c = 0; c < size; c++)
+					ans = (a1[r][c] == otherMatrix.a1[r][c]);
+		}
+		return ans;
+	}
+
+	// copy method
+	public void copy(Matrix a) {
+		for (int r = 0; r < size; r++) {
+			for (int c = 0; c < size; c++) {
+				this.a1[r][c] = a.a1[r][c];
+			}
+		}
+	}
+
+	// get copy
+	public Matrix getCopy() {
+		Matrix tempMatrix = new Matrix();
+		for (int r = 0; r < size; r++) {
+			for (int c = 0; c < size; c++) {
+				a1[r][c] = tempMatrix.a1[r][c];
+			}
+		}
+		return tempMatrix;
+	}
+}
